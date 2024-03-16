@@ -17,6 +17,7 @@ const fs = require('fs');
 
         let hasNextPage = true;
         let currentPage = 1;
+        let propertyDataArray = [];
 
         while (hasNextPage) {
             // Wait for the search results to load
@@ -55,10 +56,18 @@ const fs = require('fs');
                         statusOfPossession: modalContent.querySelector('#spn_possession').innerText.trim(),
                         address: modalContent.querySelector('#spn_address').innerText.trim(),
                         authorisedOfficerDetail: modalContent.querySelector('#spn_ao_detail').innerText.trim(),
+                        auctionOpenDate: modalContent.querySelector('#spn_auctn_start_dt').innerText.trim(),
+                        auctionCloseDate: modalContent.querySelector('#spn_auctn_end_dt').innerText.trim(),
+                        emdLastDate: modalContent.querySelector('#spn_emd_last_dt').innerText.trim(),
+                        sealedBidLastDate: modalContent.querySelector('#spn_bid_last_dt').innerText.trim(),
+                        sealedBidExtendedDate: modalContent.querySelector('#spn_bid_extd_dt').innerText.trim(),
+                        propertyVisitedCount: modalContent.querySelector('#lbl_property_count').innerText.trim(),
                     };
                 });
 
                 // console.log(propertyData);
+
+                propertyDataArray.push(propertyData);
 
                 const jsonData = JSON.stringify(propertyData);
 
