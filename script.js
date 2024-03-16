@@ -1,7 +1,6 @@
 const { chromium } = require('playwright');
 const fs = require('fs');
 
-
 (async () => {
     const browser = await chromium.launch();
     const context = await browser.newContext();
@@ -65,11 +64,9 @@ const fs = require('fs');
                     };
                 });
 
-                // console.log(propertyData);
-
                 propertyDataArray.push(propertyData);
 
-                const jsonData = JSON.stringify(propertyData);
+                const jsonData = JSON.stringify(propertyDataArray);
 
                 const filePath = './propertyData.json'
 
@@ -77,11 +74,11 @@ const fs = require('fs');
                     if (err) {
                         console.error('Error writing file:', err);
                     } else {
-                        console.log('Data saved to', filePath);
+                        console.log(propertyData);
+
                     }
                 });
 
-                // Close the modal if it's open
                 const isModalOpen = await page.isVisible('.modal-content');
                 if (isModalOpen) {
                     await page.click('.modal-header button.close');
@@ -94,8 +91,9 @@ const fs = require('fs');
 
             if (hasNextPage) {
                 // Go to the next page
+                const nextPageButtonSelector = `#tbl_search_paginate a:has-text("${currentPage + 1}")`;
+                await page.click(nextPageButtonSelector);
                 currentPage++;
-                await page.click(`#tbl_search_paginate a[data-dt-idx="${currentPage}"]`);
             }
         }
     } catch (error) {
